@@ -83,9 +83,6 @@ const SearchBarComponent = () => {
   // function to divide data into section like total, chats , files , people, list
   const handleDataConversion = (data: ApiWordResponse[]) => {
     const totalLength = data.length;
-
-    // Initialize the categorized arrays
-    let total: templateStorage[] = [];
     let chats: templateStorage[] = [];
     let files: templateStorage[] = [];
     let people: templateStorage[] = [];
