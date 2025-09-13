@@ -1,5 +1,3 @@
-// components/SearchBarComponent.tsx
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -45,6 +43,7 @@ const SearchBarComponent = () => {
     "files",
     "people",
   ]);
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const [dataToRender, setDataToRender] = useState<templateStorage[]>([]);
   const [gearSuboptionOpen, setGearSuboptionOpen] = useState<boolean>(false);
   // Debouncing logic with useEffect
@@ -93,7 +92,7 @@ const SearchBarComponent = () => {
     let list: templateStorage[] = [];
 
     // Rule 1: 'total' always contains all elements
-    total = data.map((item) => ({ ...item, type: "total" }));
+    // total = data.map((item) => ({ ...item, type: "total" }));
 
     // --- Apply categorization rules ---
 
@@ -149,12 +148,12 @@ const SearchBarComponent = () => {
         .map((item) => ({ ...item, type: "people" }));
     }
     //   updating state
-    setResults([...chats, ...files, ...people, ...list]);
+    setResults([...files, ...people, ...chats, ...list]);
     setChats(chats);
     setFiles(files);
     setPeople(people);
     setList(list);
-    setDataToRender(total); // Default to 'total' category
+    setDataToRender([...files, ...people, ...chats, ...list]); // Default to 'total' category
   };
   const hanldeClearQuery = () => {
     setQuery("");
@@ -238,12 +237,20 @@ const SearchBarComponent = () => {
           />
         </div>
         <div>
-          <Button
-            label="Clear"
-            styles={{ color: "#000" }}
-            variant="underline"
-            clickFn={hanldeClearQuery}
-          />
+          {query.length > 0 && (
+            <Button
+              label="Clear"
+              styles={{ color: "#000" }}
+              variant="underline"
+              clickFn={hanldeClearQuery}
+            />
+          )}{" "}
+          {query.length < 1 && (
+            <div className="flex items-center gap-2 text-gray-400">
+              <div className="border px-2 rounded">H</div>
+              Quick access
+            </div>
+          )}
         </div>
       </div>
 
@@ -288,7 +295,7 @@ const SearchBarComponent = () => {
               />
             )}
 
-             {/* Show Chat button only if 'chats' is in activeTabs */}
+            {/* Show Chat button only if 'chats' is in activeTabs */}
             {isTabActive("chats") && (
               <Button
                 isActive={activeCategory === "chats"}
@@ -388,16 +395,38 @@ const SearchBarComponent = () => {
                     ) : result.type === "list" ? (
                       <IoListOutline className="text-white m-[6px]" />
                     ) : (
-                      <IoSearchOutline className="text-white m-[6px]" />
+                      result.type
                     )}
                   </div>
                   {result.word}
                 </div>
 
                 <div className="transition opacity-0 group-hover:opacity-100 flex items-center gap-4">
-                  <div className="text-black bg-[#737373] rounded-full w-6 h-6 flex items-center justify-center text-[12px]">
+                  {/* <div className="text-black bg-[#737373] rounded-full w-6 h-6 flex items-center justify-center text-[12px]">
                     <FiLink />
+                  </div> */}
+                  <div className="relative">
+                    <div
+                      onClick={() => {
+                        navigator.clipboard.writeText(
+                          "https://www.linkedin.com/in/h-rawat007/"
+                        );
+                        setCopiedIndex(index); // track which item got copied
+                        setTimeout(() => setCopiedIndex(null), 2000); // hide after 2 sec
+                      }}
+                      className="text-black bg-[#737373] rounded-full w-6 h-6 flex items-center justify-center text-[12px] cursor-pointer"
+                    >
+                      <FiLink />
+                    </div>
+
+                    {/* "Copied" text */}
+                    {copiedIndex === index && (
+                      <span className="absolute -top-5 left-1/2 -translate-x-1/2 text-xs text-green-600">
+                        Copied!
+                      </span>
+                    )}
                   </div>
+
                   <div className="flex items-center justify-center gap-2">
                     <RiShareBoxFill /> New Tab
                   </div>
