@@ -1,0 +1,33 @@
+.inactiveButton {
+  justify-content: start;
+  background-color: #E8E7EA;
+  animation: inactive 0.25s 1;
+}
+
+.activeButton {
+  justify-content: end;
+  background-color: #000;
+  animation: active 0.25s 1;
+}
+
+@keyframes inactive {
+  from {
+    justify-content: end;
+    background-color: #000;
+  }
+  to {
+    justify-content: start;
+    background-color: #E8E7EA;
+  }
+}
+
+@keyframes active {
+  from {
+    justify-content: start;
+    background-color: #E8E7EA;
+  }
+  to {
+    justify-content: end;
+    background-color: #000;
+  }
+}

@@ -1,0 +1,72 @@
+.dataFill{
+    animation: fillData 0.25s 1 forwards;
+}
+@keyframes fillData {
+    from{
+        height: 0px;
+        opacity: 0;
+    }
+    to{
+        height: 17rem;
+        opacity: 1;
+    }
+}
+.dataBlank{
+    animation: blankData 0.25s 1 forwards;
+}
+@keyframes blankData {
+    from{
+        height: 17rem;
+        opacity: 1;
+    }
+    to{
+        height: 0px;
+        opacity: 0;
+    }
+}
+
+/* Base class for your gear icon element */
+.gear-icon {
+  display: inline-block; /* Ensures transform can be applied */
+  cursor: pointer;
+  
+  /* This transition ensures the rotation is smooth in both directions */
+  transition: transform 0.4s ease-in-out;
+}
+
+/* 
+  Class to be ADDED when `gearSuboptionOpen` is TRUE.
+  This will rotate the icon 90 degrees clockwise.
+*/
+.gear-icon-open {
+  transform: rotate(90deg);
+}
+.openGearBox{
+    animation: openBox 0.25s 1 forwards;
+}
+@keyframes openBox {
+    from {
+        opacity: 0;
+        height: 0;
+        overflow: hidden;
+    }to {
+        opacity: 1;
+        height: 120px;
+        overflow: visible;
+    }
+}
+.closeGearBox{
+    animation: closeBox 0.25s 1 forwards;
+}
+@keyframes closeBox {
+    from {
+        opacity: 1;
+        height: 120px;
+        overflow: visible;
+    }to {
+        opacity: 0;
+        height: 0;
+        overflow: hidden;
+    }
+    
+}

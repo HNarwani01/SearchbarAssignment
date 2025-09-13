@@ -24,3 +24,23 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+.transition {
+  transition: all 0.3s ease-in-out;
+}
+.rotate {
+  animation: rotate-loading 1s linear infinite;
+  display: inline-block;
+}
+
+@keyframes rotate-loading {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
